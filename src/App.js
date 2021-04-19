@@ -6,27 +6,33 @@ import Person from './Person/Person'
 class App extends Component {
   state =  {
     persons:[
-      {name:"Moe", age:44},
-      {name:"Mario", age:32},
-      {name:"essa", age:22},
+      {id:'dafc', name:"Moe", age:44},
+      {id:'daff', name:"Mario", age:32},
+      {id:'edfagf23', name:"essa", age:22},
     ],
     otherState: 'some other value',
     oAge: 23,
     showPersons: false,
   };
 
-  nameChangedHandler = (event) =>{
-    this.setState({
-      persons:[
-        {name:"Moe", age:44},
-        {name:"Mario", age:32},
-        {name:event.target.value, age:22},
-      ],
+  nameChangedHandler = (event, id) =>{
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id ===id;
     });
+
+   const person = {...this.state.persons[personIndex]};
+   //const person = Object.assign({},this.state.persons[personIndex]);
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({persons: persons });
   }
 
   deletePersonHandler = (personIndex) => {
-    const persons = this.state.persons;
+    //const persons = this.state.persons;
+    const persons = [...this.state.persons];
     persons.splice(personIndex,1);
     this.setState({persons:persons})
   }
@@ -41,7 +47,7 @@ class App extends Component {
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      'font-size': '15px',
+      fontSize: '15px',
       cursor: 'pointer'
     };
     let persons= null;
@@ -53,7 +59,9 @@ class App extends Component {
               return <Person 
               click={() => this.deletePersonHandler(index)}
               name={person.name}
-              age={person.age} />
+              age={person.age}
+              key={person.id}
+              changed={(event) => this.nameChangedHandler(event, person.id)} />
             })}
         </div> 
       );
