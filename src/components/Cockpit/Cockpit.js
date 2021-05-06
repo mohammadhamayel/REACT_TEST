@@ -5,9 +5,19 @@ const cockpit = (props) => {
     useEffect(() => {
       console.log('[Cockpit.js] useEffect');
       setTimeout(() => {
-        
+        alert('saved data to cloud');
       }, 1000);
-    })
+      return () =>{
+        console.log('[Cockpit.js] useEffect-clean up'); // runs for the last time when useEffect rendered and this depends on second arrgs the determine when this code run
+      }
+    }, []); // when i put props.persons it appears when the person change and when run for the first time, and if its just empty it will run by default just for the first time 
+
+    useEffect(() => {
+      console.log('[Cockpit.js] 2nd useEffect');
+      return () =>{
+        console.log('[Cockpit.js] useEffect-clean up'); // runs for the last time when useEffect rendered and this depends on second
+      }
+    }); // this will run every Update cycle cause there is no arrgs 
     const assignClasses =[];
     let btnClass = '';
     if(props.showPersons){

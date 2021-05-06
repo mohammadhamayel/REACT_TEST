@@ -22,6 +22,10 @@ class Persons extends Component {
         console.log('[Persons.js] componentDidUpdate');
         console.log(Snapshot);
     }
+
+    componentWillUnmount(){ // you can use this how to run a code when the component removed
+        console.log('[Persons.js] componentWillUnmount');
+    }
     render(){
         console.log('[Persons.js] rendering...')
     
